@@ -2,4 +2,6 @@
 <resources>
     <color name="marine">#ff009da2</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="quiz_available_text_color">#ffff463d</color>
 </resources>

@@ -1,4 +1,4 @@
-package rwth.elearning.ecognita.client.ecognitaclient;
+package rwth.elearning.ecognita.client.ecognitaclient.authorization;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import rwth.elearning.ecognita.client.ecognitaclient.R;
 
 /**
  * Created by ekaterina on 22.05.2015.

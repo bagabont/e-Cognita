@@ -1,8 +1,10 @@
-package rwth.elearning.ecognita.client.ecognitaclient;
+package rwth.elearning.ecognita.client.ecognitaclient.authorization;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.os.Bundle;
+
+import rwth.elearning.ecognita.client.ecognitaclient.R;
 
 
 public class SignInActivity extends FragmentActivity {
