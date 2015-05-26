@@ -1,60 +1,173 @@
 package rwth.elearning.ecognita.client.ecognitaclient.courses;
 
-import android.app.ListActivity;
-import android.content.Intent;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
-import rwth.elearning.ecognita.client.ecognitaclient.courses.coursedetails.CourseDetailsActivity;
-import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
+import rwth.elearning.ecognita.client.ecognitaclient.model.NavDrawerItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
 
 /**
  * Created by ekaterina on 22.05.2015.
  */
-public class MyCoursesActivity extends ListActivity {
-    public static final String COURSE_ITEM = "courseitem";
-    private CoursesListAdapter adapter;
+@SuppressWarnings("deprecation")
+public class MyCoursesActivity extends Activity {
+
+    private DrawerLayout drawerLayout;
+    private ListView drawerListView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    private ListAdapter adapter;
+    private User loggedInUser;
+
+    private static final int HOME_POSITION = 0;
+    private static final int SEARCH_POSITION = 1;
+    private static final int STATISTICS_POSITION = 2;
+    private static final int SETTINGS_POSITION = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_courses);
+
         Bundle extras = getIntent().getExtras();
-        User loggedInUser = (User) extras.getSerializable(LogInFragment.USER_TAG);
+        this.loggedInUser = (User) extras.getSerializable(LogInFragment.USER_TAG);
 
-        this.adapter = new CoursesListAdapter(getApplicationContext());
-        addCourseItemsToAdapter(loggedInUser);
-        setListAdapter(this.adapter);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerListView = (ListView) findViewById(R.id.list_slidermenu);
 
-        ListView lv = getListView();
+        drawerListView.setOnItemClickListener(new SlideMenuClickListener());
+        this.adapter = getInitAdapter();
+        drawerListView.setAdapter(this.adapter);
 
-        // Enable filtering when the user types in the virtual keyboard
-        lv.setTextFilterEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
-        // Set an setOnItemClickListener on the ListView
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+        this.actionBarDrawerToggle = getActionBarDrawerToggle();
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-                Object item = adapter.getItem(position);
-                if (item instanceof CourseListItem) {
-                    CourseListItem courseListItem = (CourseListItem) item;
-                    Intent intent = new Intent(MyCoursesActivity.this, CourseDetailsActivity.class);
-                    intent.putExtra(COURSE_ITEM, courseListItem);
-                    startActivity(intent);
-                }
-            }
-        });
+        if (savedInstanceState == null) {
+            displayView(HOME_POSITION);
+        }
     }
 
-    private void addCourseItemsToAdapter(User loggedInUser) {
-        if (this.adapter != null) {
-            //TODO: get course names from the server by having loggedInUser (see arguments)
-            this.adapter.add(new CourseListItem("eLearning"));
-            this.adapter.add(new CourseListItem("Logical Programming"));
+    private ActionBarDrawerToggle getActionBarDrawerToggle() {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+                R.drawable.ic_slide_menu_drawer,
+                R.string.app_name,
+                R.string.app_name
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(MyCoursesActivity.this.getTitle());
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getActionBar().setTitle(MyCoursesActivity.this.getTitle());
+                invalidateOptionsMenu();
+            }
+        };
+        return actionBarDrawerToggle;
+    }
+
+    private ListAdapter getInitAdapter() {
+        String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        TypedArray navMenuIcons = getResources()
+                .obtainTypedArray(R.array.nav_drawer_icons);
+        NavDrawerListAdapter adapter = new NavDrawerListAdapter(getApplicationContext());
+        adapter.add(new NavDrawerItem(navMenuTitles[HOME_POSITION], navMenuIcons.getResourceId(HOME_POSITION, -1)));
+        adapter.add(new NavDrawerItem(navMenuTitles[SEARCH_POSITION], navMenuIcons.getResourceId(SEARCH_POSITION, -1)));
+        adapter.add(new NavDrawerItem(navMenuTitles[STATISTICS_POSITION], navMenuIcons.getResourceId(STATISTICS_POSITION, -1)));
+        adapter.add(new NavDrawerItem(navMenuTitles[SETTINGS_POSITION], navMenuIcons.getResourceId(SETTINGS_POSITION, -1)));
+        return adapter;
+    }
+
+    private class SlideMenuClickListener implements
+            ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            displayView(position);
         }
+    }
+
+    private void displayView(int position) {
+        Fragment fragment = null;
+        switch (position) {
+            case HOME_POSITION:
+                fragment = MyCoursesHomeFragment.newInstance(this.loggedInUser);
+                break;
+            case SEARCH_POSITION:
+                //TODO:
+                break;
+            case STATISTICS_POSITION:
+                //TODO
+                break;
+            case SETTINGS_POSITION:
+                //TODO
+                break;
+
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+
+            drawerListView.setItemChecked(position, true);
+            drawerListView.setSelection(position);
+            drawerLayout.closeDrawer(drawerListView);
+        }
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_sign_in, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerListView);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 }

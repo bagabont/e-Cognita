@@ -12,4 +12,20 @@
     <string name="matr_number">Matriculation Number:</string>
     <string name="create_password">Create password:</string>
     <string name="signup_button_label">Sign Up</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home (My Courses)</item>
+        <item >Search Courses</item>
+        <item >Statistics</item>
+        <item >Settings</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_slide_menu_home</item>
+        <item>@drawable/ic_slide_menu_search</item>
+        <item>@drawable/ic_slide_menu_statistics</item>
+        <item>@drawable/ic_slide_menu_settings</item>
+    </array>
 </resources>

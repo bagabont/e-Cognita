@@ -4,4 +4,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="quiz_available_text_color">#ffff463d</color>
+    <color name="list_background">#fff4f4f4</color>
+    <color name="list_background_pressed">#ff00c1c6</color>
+    <color name="list_divider">#ffededed</color>
+    <color name="list_item_title">#ff4f4f4f</color>
 </resources>

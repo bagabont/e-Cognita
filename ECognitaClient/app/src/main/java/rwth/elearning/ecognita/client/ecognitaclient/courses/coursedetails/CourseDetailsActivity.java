@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
 import rwth.elearning.ecognita.client.ecognitaclient.courses.MyCoursesActivity;
+import rwth.elearning.ecognita.client.ecognitaclient.courses.MyCoursesHomeFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
 
 /**
@@ -15,7 +16,7 @@ public class CourseDetailsActivity extends FragmentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
-        CourseListItem course = (CourseListItem) extras.getSerializable(MyCoursesActivity.COURSE_ITEM);
+        CourseListItem course = (CourseListItem) extras.getSerializable(MyCoursesHomeFragment.COURSE_ITEM);
         if (course != null) {
             setTitle(course.getCourseName());
         }
