@@ -12,8 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
@@ -28,6 +30,8 @@ public class MyCoursesActivity extends Activity {
 
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
+    private LinearLayout slideMenu;
+    private TextView emailAddress;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private ListAdapter adapter;
@@ -48,6 +52,9 @@ public class MyCoursesActivity extends Activity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerListView = (ListView) findViewById(R.id.list_slidermenu);
+        slideMenu = (LinearLayout) findViewById(R.id.linear_layout_menu);
+        emailAddress = (TextView) findViewById(R.id.email_text_slider_menu);
+        emailAddress.setText(loggedInUser.getEmailAddress());
 
         drawerListView.setOnItemClickListener(new SlideMenuClickListener());
         this.adapter = getInitAdapter();
@@ -129,7 +136,7 @@ public class MyCoursesActivity extends Activity {
 
             drawerListView.setItemChecked(position, true);
             drawerListView.setSelection(position);
-            drawerLayout.closeDrawer(drawerListView);
+            drawerLayout.closeDrawer(slideMenu);
         }
     }
 
@@ -166,7 +173,7 @@ public class MyCoursesActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerListView);
+        boolean drawerOpen = drawerLayout.isDrawerOpen(slideMenu);
         menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
