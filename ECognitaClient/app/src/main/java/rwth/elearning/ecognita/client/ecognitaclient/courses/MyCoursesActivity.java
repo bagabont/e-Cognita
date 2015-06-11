@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import rwth.elearning.ecognita.client.ecognitaclient.R;
+import rwth.elearning.ecognita.client.ecognitaclient.authorization.ActivityWithLogoutMenu;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.model.NavDrawerItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
@@ -26,7 +27,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.model.User;
  * Created by ekaterina on 22.05.2015.
  */
 @SuppressWarnings("deprecation")
-public class MyCoursesActivity extends Activity {
+public class MyCoursesActivity extends ActivityWithLogoutMenu {
 
     private DrawerLayout drawerLayout;
     private ListView drawerListView;
@@ -47,8 +48,7 @@ public class MyCoursesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_courses);
 
-        Bundle extras = getIntent().getExtras();
-        this.loggedInUser = (User) extras.getSerializable(LogInFragment.USER_TAG);
+        this.loggedInUser = LogInFragment.getConnectedUser();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerListView = (ListView) findViewById(R.id.list_slidermenu);
@@ -153,28 +153,17 @@ public class MyCoursesActivity extends Activity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_sign_in, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean drawerOpen = drawerLayout.isDrawerOpen(slideMenu);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        menu.findItem(ActivityWithLogoutMenu.MENU_LOGOUT).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 }

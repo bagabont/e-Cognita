@@ -13,6 +13,11 @@
     <string name="create_password">Create password:</string>
     <string name="signup_button_label">Sign Up</string>
     <string name="logout_button_label">Log out</string>
+    <string name="failed_to_login_message">Could not connect with these credentials, please, check your email and password.</string>
+    <string name="first_name">First name:</string>
+    <string name="last_name">Last name:</string>
+    <string name="failed_to_signup_message">Failed to sign up. Please, make sure that such a user doesn\'t already exist.</string>
+    <string name="logout_menu_label">Log out</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
