@@ -1,4 +1,4 @@
-package rwth.elearning.ecognita.client.ecognitaclient.tasks;
+package rwth.elearning.ecognita.client.ecognitaclient.tasks.user;
 
 import android.os.AsyncTask;
 
@@ -10,45 +10,42 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
-import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.ApiPathEnum;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.ResponseEnum;
 
 /**
- * Created by ekaterina on 12.06.2015.
+ * Created by ekaterina on 11.06.2015.
  */
-public class StateChangeRequest {
-    private CourseListItem item;
+public class SignUpUserTask {
     private OnResponseListener onResponseListener;
 
-    public StateChangeRequest(CourseListItem item) {
-        this.item = item;
-    }
-
-    public void send() {
-        new HttpGetChangeStateTask().execute(item);
+    public void send(User user) {
+        new HttpSignUpUserTask().execute(user);
     }
 
     public void setOnResponseListener(OnResponseListener onResponseListener) {
         this.onResponseListener = onResponseListener;
     }
 
-    private class HttpGetChangeStateTask extends AsyncTask<CourseListItem, Void, Boolean> {
+    private class HttpSignUpUserTask extends AsyncTask<User, Void, ResponseEnum> {
 
         @Override
-        protected Boolean doInBackground(CourseListItem... params) {
+        protected ResponseEnum doInBackground(User... args) {
             HttpURLConnection conn = null;
-            User connectedUser = LogInFragment.getConnectedUser();
-            if (connectedUser == null) return false;
-
-            CourseListItem courseItem = params[0];
             try {
+                User user = args[0];
                 String urlParameters =
-                        "course_id=" + URLEncoder.encode(courseItem.getId(), "UTF-8");
+                        "email=" + URLEncoder.encode(user.getEmailAddress(), "UTF-8") +
+                                "&password=" + URLEncoder.encode(user.getPassword(), "UTF-8") +
+                                "&firstname=" + URLEncoder.encode(user.getFirstName(), "UTF-8") +
+                                "&lastname=" + URLEncoder.encode(user.getLastName(), "UTF-8");
 
-                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.ENROLL_FOR_COURSE.getPath());
+                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.USER_SIGN_UP.getPath());
+
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
-                conn.addRequestProperty("Authorization", LogInFragment.getB64Auth(connectedUser.getEmailAddress(), connectedUser.getPassword()));
                 conn.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded");
 
@@ -65,12 +62,9 @@ public class StateChangeRequest {
                 dataOutputStream.writeBytes(urlParameters);
                 dataOutputStream.flush();
                 dataOutputStream.close();
+
                 int status = conn.getResponseCode();
-                ResponseEnum statusCode = ResponseEnum.getResponseEnumByCode(status);
-                switch (statusCode) {
-                    case NOCONTENT:
-                        return true;
-                }
+                return ResponseEnum.getResponseEnumByCode(status);
             } catch (MalformedURLException e) {
                 onResponseListener.onError(e.getMessage());
             } catch (IOException e) {
@@ -80,13 +74,14 @@ public class StateChangeRequest {
                     conn.disconnect();
                 }
             }
-            return false;
+
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Boolean statusChangedSuccessfully) {
-            super.onPostExecute(statusChangedSuccessfully);
-            onResponseListener.onResponse(statusChangedSuccessfully);
+        protected void onPostExecute(ResponseEnum responseCode) {
+            super.onPostExecute(responseCode);
+            onResponseListener.onResponse(responseCode);
         }
     }
 }

@@ -1,4 +1,4 @@
-package rwth.elearning.ecognita.client.ecognitaclient.tasks;
+package rwth.elearning.ecognita.client.ecognitaclient.tasks.courses;
 
 import org.json.JSONArray;
 import org.json.JSONException;

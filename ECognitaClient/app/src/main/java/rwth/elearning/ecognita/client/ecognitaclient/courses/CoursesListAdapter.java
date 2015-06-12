@@ -8,11 +8,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import java.util.List;
-
 import rwth.elearning.ecognita.client.ecognitaclient.AbstractListAdapter;
 import rwth.elearning.ecognita.client.ecognitaclient.R;
-import rwth.elearning.ecognita.client.ecognitaclient.tasks.StateChangeRequest;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.courses.LeaveCourseTask;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.courses.StateChangeRequest;
 import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 
@@ -54,7 +53,7 @@ public class CoursesListAdapter extends AbstractListAdapter<CourseListItem> {
                     if (isChecked) {
                         performEnrollForTheCourse(item);
                     } else {
-                        performLoseTheCourse();
+                        performLoseTheCourse(item);
                     }
                 }
             });
@@ -62,8 +61,26 @@ public class CoursesListAdapter extends AbstractListAdapter<CourseListItem> {
         return view;
     }
 
-    private void performLoseTheCourse() {
-        //TODO: API NOT IMPLEMENTED
+    private void performLoseTheCourse(final CourseListItem item) {
+        final boolean oldState = item.isInEnrolledList();
+        item.setIsInEnrolledList(false);
+        LeaveCourseTask leaveCourseTask = new LeaveCourseTask(item);
+        leaveCourseTask.setOnResponseListener(new OnResponseListener<Boolean>() {
+
+            @Override
+            public void onResponse(Boolean responseOK) {
+                if (!responseOK) {
+                    item.setIsInEnrolledList(oldState);
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                //
+            }
+        });
+        leaveCourseTask.send();
     }
 
     private void performEnrollForTheCourse(final CourseListItem item) {

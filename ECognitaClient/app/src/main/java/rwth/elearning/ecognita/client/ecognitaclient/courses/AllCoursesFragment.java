@@ -4,7 +4,7 @@ import java.util.List;
 
 import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.ApiPathEnum;
-import rwth.elearning.ecognita.client.ecognitaclient.tasks.GetListOfCoursesTask;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.courses.GetListOfCoursesTask;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 
 /**

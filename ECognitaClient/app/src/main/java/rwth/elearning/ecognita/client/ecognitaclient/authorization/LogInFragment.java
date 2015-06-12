@@ -18,7 +18,7 @@ import android.widget.Toast;
 import rwth.elearning.ecognita.client.ecognitaclient.courses.MyCoursesActivity;
 import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
-import rwth.elearning.ecognita.client.ecognitaclient.tasks.CheckUserTask;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.user.CheckUserTask;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 
 /**

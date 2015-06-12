@@ -1,4 +1,4 @@
-package rwth.elearning.ecognita.client.ecognitaclient.tasks;
+package rwth.elearning.ecognita.client.ecognitaclient.tasks.user;
 
 import android.os.AsyncTask;
 
@@ -10,6 +10,9 @@ import java.net.URL;
 
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.ApiPathEnum;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.ResponseEnum;
 
 /**
  * Created by ekaterina on 11.06.2015.

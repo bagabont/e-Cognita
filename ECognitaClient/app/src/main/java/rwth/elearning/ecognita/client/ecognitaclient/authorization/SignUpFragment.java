@@ -10,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.courses.MyCoursesActivity;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
-import rwth.elearning.ecognita.client.ecognitaclient.tasks.CheckUserTask;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.ResponseEnum;
-import rwth.elearning.ecognita.client.ecognitaclient.tasks.SignUpUserTask;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.user.SignUpUserTask;
 
 /**
  * Created by ekaterina on 22.05.2015.
