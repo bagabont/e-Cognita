@@ -90,7 +90,7 @@ public class MyCoursesHomeFragment extends ListFragment {
             public void onResponse(List<CourseListItem> coursesList) {
                 if (coursesList != null) {
                     for (CourseListItem course : coursesList) {
-                        coursesListAdapter.add(course);
+                        processItem(course);
                     }
                 }
             }
@@ -101,5 +101,10 @@ public class MyCoursesHomeFragment extends ListFragment {
             }
         });
         getListOfEnrolledCoursesTask.send(this.loggedInUser);
+    }
+
+    protected void processItem(CourseListItem course) {
+        course.setIsInEnrolledList(true);
+        coursesListAdapter.add(course);
     }
 }

@@ -9,6 +9,7 @@ public class CourseListItem implements IListItem {
     private String courseName;
     private String courseProvider;
     private String courseQuizAvailableLabel;
+    private boolean isInEnrolledList;
 
     public CourseListItem(String id, String courseName, String description) {
         this.courseName = courseName;
@@ -34,5 +35,13 @@ public class CourseListItem implements IListItem {
 
     public String getId() {
         return this.id;
+    }
+
+    public boolean isInEnrolledList() {
+        return this.isInEnrolledList;
+    }
+
+    public void setIsInEnrolledList(boolean isInEnrolledList) {
+        this.isInEnrolledList = isInEnrolledList;
     }
 }
