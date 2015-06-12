@@ -4,7 +4,7 @@ package rwth.elearning.ecognita.client.ecognitaclient.tasks;
  * Created by ekaterina on 11.06.2015.
  */
 public enum ResponseEnum {
-    OK(200), CREATED(201), CONFLICT(409), BADREQUEST(400), UNAUTHORIZED(401);
+    OK(200), CREATED(201), CONFLICT(409), BADREQUEST(400), UNAUTHORIZED(401), SERVICEUNAVAILABLE(503);
 
     private final int code;
 

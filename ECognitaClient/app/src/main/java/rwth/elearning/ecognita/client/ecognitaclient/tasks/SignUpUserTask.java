@@ -39,7 +39,7 @@ public class SignUpUserTask {
                                 "&firstname=" + URLEncoder.encode(user.getFirstName(), "UTF-8") +
                                 "&lastname=" + URLEncoder.encode(user.getLastName(), "UTF-8");
 
-                URL url = new URL(LogInFragment.HOST_ADDRESS + "/api/users");
+                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.USER_SIGN_UP.getPath());
 
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");

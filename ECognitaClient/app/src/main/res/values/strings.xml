@@ -18,6 +18,8 @@
     <string name="last_name">Last name:</string>
     <string name="failed_to_signup_message">Failed to sign up. Please, make sure that such a user doesn\'t already exist.</string>
     <string name="logout_menu_label">Log out</string>
+    <string name="new_courses_tab_label">NEW</string>
+    <string name="all_courses_tab_label">ALL</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">

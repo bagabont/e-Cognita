@@ -1,17 +1,19 @@
 package rwth.elearning.ecognita.client.ecognitaclient.courses;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -28,15 +30,14 @@ import rwth.elearning.ecognita.client.ecognitaclient.model.User;
  */
 @SuppressWarnings("deprecation")
 public class MyCoursesActivity extends ActivityWithLogoutMenu {
+    protected DrawerLayout drawerLayout;
+    protected ListView drawerListView;
+    protected LinearLayout slideMenu;
+    protected TextView emailAddress;
+    protected ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private DrawerLayout drawerLayout;
-    private ListView drawerListView;
-    private LinearLayout slideMenu;
-    private TextView emailAddress;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-
-    private ListAdapter adapter;
-    private User loggedInUser;
+    protected ListAdapter adapter;
+    protected User loggedInUser;
 
     private static final int HOME_POSITION = 0;
     private static final int SEARCH_POSITION = 1;
@@ -46,8 +47,29 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_courses);
+        initActivity(savedInstanceState);
+    }
 
+    protected void initActivity(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_my_courses);
+        ImageButton addCourseButton = (ImageButton) findViewById(R.id.add_course_cutton);
+        if (addCourseButton != null) {
+            addCourseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MyCoursesActivity.this, AllCoursesActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        prepareSlidingMenu(R.id.frame_container);
+
+        if (savedInstanceState == null) {
+            displayView(HOME_POSITION, this, R.id.frame_container);
+        }
+    }
+
+    protected void prepareSlidingMenu(@IdRes int containerViewId) {
         this.loggedInUser = LogInFragment.getConnectedUser();
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -56,7 +78,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         emailAddress = (TextView) findViewById(R.id.email_text_slider_menu);
         emailAddress.setText(loggedInUser.getEmailAddress());
 
-        drawerListView.setOnItemClickListener(new SlideMenuClickListener());
+        drawerListView.setOnItemClickListener(new SlideMenuClickListener(this, containerViewId));
         this.adapter = getInitAdapter();
         drawerListView.setAdapter(this.adapter);
 
@@ -65,13 +87,9 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
 
         this.actionBarDrawerToggle = getActionBarDrawerToggle();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        if (savedInstanceState == null) {
-            displayView(HOME_POSITION);
-        }
     }
 
-    private ActionBarDrawerToggle getActionBarDrawerToggle() {
+    protected ActionBarDrawerToggle getActionBarDrawerToggle() {
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 R.drawable.ic_slide_menu_drawer,
                 R.string.app_name,
@@ -90,7 +108,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         return actionBarDrawerToggle;
     }
 
-    private ListAdapter getInitAdapter() {
+    protected ListAdapter getInitAdapter() {
         String[] navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
         TypedArray navMenuIcons = getResources()
                 .obtainTypedArray(R.array.nav_drawer_icons);
@@ -102,15 +120,23 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         return adapter;
     }
 
-    private class SlideMenuClickListener implements
+    protected class SlideMenuClickListener implements
             ListView.OnItemClickListener {
+        private ActivityWithLogoutMenu activity;
+        private int containerId;
+
+        public SlideMenuClickListener(ActivityWithLogoutMenu activity, @IdRes int containerViewId) {
+            this.activity = activity;
+            this.containerId = containerViewId;
+        }
+
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            displayView(position);
+            displayView(position, activity, containerId);
         }
     }
 
-    private void displayView(int position) {
+    protected void displayView(int position, ActivityWithLogoutMenu activity, @IdRes int containerViewId) {
         Fragment fragment = null;
         switch (position) {
             case HOME_POSITION:
@@ -131,8 +157,8 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(containerViewId, fragment).commit();
 
             drawerListView.setItemChecked(position, true);
             drawerListView.setSelection(position);

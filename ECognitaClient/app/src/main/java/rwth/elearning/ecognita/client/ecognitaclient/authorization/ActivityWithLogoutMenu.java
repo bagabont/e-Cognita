@@ -1,6 +1,6 @@
 package rwth.elearning.ecognita.client.ecognitaclient.authorization;
 
-import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -9,7 +9,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.R;
 /**
  * Created by ekaterina on 11.06.2015.
  */
-public class ActivityWithLogoutMenu extends Activity {
+public class ActivityWithLogoutMenu extends FragmentActivity {
     public static final int MENU_LOGOUT = Menu.FIRST;
 
     /**

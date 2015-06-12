@@ -38,7 +38,7 @@ public class CheckUserTask {
 
             HttpURLConnection conn = null;
             try {
-                URL url = new URL(LogInFragment.HOST_ADDRESS + "/api/account/courses/enrolled");
+                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.USER_CHECK.getPath());
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.addRequestProperty("Authorization", LogInFragment.getB64Auth(loggingInUser.getEmailAddress(), loggingInUser.getPassword()));
