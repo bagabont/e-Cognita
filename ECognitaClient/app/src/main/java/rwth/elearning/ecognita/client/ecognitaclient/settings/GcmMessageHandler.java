@@ -36,9 +36,10 @@ public class GcmMessageHandler extends IntentService {
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        mes = extras.getString("title");
+        mes = extras.getString("text");
+        String quiz_id = extras.getString("quiz_id");
         showToast();
-        Log.i("GCM", "Received : (" + messageType + ")  " + extras.getString("title"));
+        Log.i("GCM", "Received : (" + messageType + ")  ");
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
