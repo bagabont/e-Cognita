@@ -26,7 +26,7 @@ import java.io.IOException;
 public class SettingsFragment extends Fragment {
     private GoogleCloudMessaging gcm;
     private String regid;
-    private String PROJECT_NUMBER = "AIzaSyB1ywrBADZYLGXtRLQ8bxvyL0JpSHv03ls";
+    private String PROJECT_NUMBER = "129253574970";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
