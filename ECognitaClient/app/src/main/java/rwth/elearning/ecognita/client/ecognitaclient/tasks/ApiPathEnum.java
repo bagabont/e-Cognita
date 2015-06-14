@@ -5,11 +5,11 @@ package rwth.elearning.ecognita.client.ecognitaclient.tasks;
  */
 public enum ApiPathEnum {
     ALL_COURSES("/api/courses/"),
-    USER_COURSES("/api/account/courses/enrolled"),
-    USER_CHECK("/api/account/courses/enrolled"),
+    USER_COURSES("/api/account/enrollments"),
+    USER_CHECK("/api/account/enrollments/"),
     USER_SIGN_UP("/api/users"),
-    ENROLL_FOR_COURSE("/api/account/courses/enrolled"),
-    LEAVE_COURSE("/api/account/courses/enrolled/");
+    ENROLL_FOR_COURSE("/api/account/enrollments/"),
+    LEAVE_COURSE("/api/account/enrollments/");
 
     private final String path;
 

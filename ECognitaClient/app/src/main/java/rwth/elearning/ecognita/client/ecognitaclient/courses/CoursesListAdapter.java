@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import rwth.elearning.ecognita.client.ecognitaclient.AbstractListAdapter;
 import rwth.elearning.ecognita.client.ecognitaclient.R;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.courses.EnrollForCourseTask;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.courses.LeaveCourseTask;
-import rwth.elearning.ecognita.client.ecognitaclient.tasks.courses.StateChangeRequest;
 import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 
@@ -86,7 +86,7 @@ public class CoursesListAdapter extends AbstractListAdapter<CourseListItem> {
     private void performEnrollForTheCourse(final CourseListItem item) {
         final boolean oldState = item.isInEnrolledList();
         item.setIsInEnrolledList(true);
-        StateChangeRequest stateChangeRequest = new StateChangeRequest(item);
+        EnrollForCourseTask stateChangeRequest = new EnrollForCourseTask(item);
         stateChangeRequest.setOnResponseListener(new OnResponseListener<Boolean>() {
 
             @Override

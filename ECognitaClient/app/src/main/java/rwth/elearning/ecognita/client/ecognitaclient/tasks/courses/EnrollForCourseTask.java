@@ -19,11 +19,11 @@ import rwth.elearning.ecognita.client.ecognitaclient.tasks.ResponseEnum;
 /**
  * Created by ekaterina on 12.06.2015.
  */
-public class StateChangeRequest {
+public class EnrollForCourseTask {
     private CourseListItem item;
     private OnResponseListener onResponseListener;
 
-    public StateChangeRequest(CourseListItem item) {
+    public EnrollForCourseTask(CourseListItem item) {
         this.item = item;
     }
 
@@ -48,7 +48,7 @@ public class StateChangeRequest {
                 String urlParameters =
                         "course_id=" + URLEncoder.encode(courseItem.getId(), "UTF-8");
 
-                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.ENROLL_FOR_COURSE.getPath());
+                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.ENROLL_FOR_COURSE.getPath() + courseItem.getId());
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.addRequestProperty("Authorization", LogInFragment.getB64Auth(connectedUser.getEmailAddress(), connectedUser.getPassword()));

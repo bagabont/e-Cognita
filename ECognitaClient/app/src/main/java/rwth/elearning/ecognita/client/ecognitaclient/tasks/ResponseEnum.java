@@ -10,6 +10,7 @@ public enum ResponseEnum {
     CONFLICT(409),
     BADREQUEST(400),
     UNAUTHORIZED(401),
+    NOTFOUND(404),
     SERVICEUNAVAILABLE(503);
 
     private final int code;
