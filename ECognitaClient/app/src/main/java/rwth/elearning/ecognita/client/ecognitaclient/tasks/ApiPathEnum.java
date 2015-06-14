@@ -9,7 +9,8 @@ public enum ApiPathEnum {
     USER_CHECK("/api/account/enrollments/"),
     USER_SIGN_UP("/api/users"),
     ENROLL_FOR_COURSE("/api/account/enrollments/"),
-    LEAVE_COURSE("/api/account/enrollments/");
+    LEAVE_COURSE("/api/account/enrollments/"),
+    SUBSCRIBE_FOR_NOTIFICATIONS("/api/account/subscriptions/");
 
     private final String path;
 

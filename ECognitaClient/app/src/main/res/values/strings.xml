@@ -20,6 +20,9 @@
     <string name="logout_menu_label">Log out</string>
     <string name="new_courses_tab_label">NEW</string>
     <string name="all_courses_tab_label">ALL</string>
+    <string name="subscribe_for_notifications">Subscribe for push notifications</string>
+    <string name="unsubscribe_for_notifications">Unsubscribe</string>
+    <string name="failed_to_subscribe_message">Failed to subscribe</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
