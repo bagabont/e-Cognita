@@ -107,7 +107,7 @@ public class LogInFragment extends Fragment {
      * @return a connected user or null if no user is connected
      */
     public static User getConnectedUser() {
-        if (sharedpreferences != null) {
+        if (sharedpreferences != null && sharedpreferences.contains(email)) {
             String pass = sharedpreferences.getString(password, "");
             String emailAddress = sharedpreferences.getString(email, "");
             return new User.UserBuilder(emailAddress, pass).build();
