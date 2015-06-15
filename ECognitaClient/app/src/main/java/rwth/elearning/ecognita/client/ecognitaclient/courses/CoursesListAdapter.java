@@ -46,7 +46,9 @@ public class CoursesListAdapter extends AbstractListAdapter<CourseListItem> {
             quizAvailableLabel.setText(item.getCourseQuizAvailableLabel());
 
             CheckBox star = (CheckBox) view.findViewById(R.id.star);
+            star.setOnCheckedChangeListener(null);
             star.setChecked(item.isInEnrolledList());
+
             star.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
