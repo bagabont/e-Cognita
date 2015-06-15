@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:measureWithLargestChild="false"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/quiz_image_in_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="4"
+        android:scaleType="fitXY"
+        android:src="@drawable/quiz_icon" />
+
+    <TextView
+        android:id="@+id/quiz_title_in_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textColor="@color/dark_gray"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/quiz_description_in_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textColor="@color/light_gray"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/quiz_created_in_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textColor="@color/light_gray"
+        android:textSize="24sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/quiz_available_text_color"
+        android:padding="8dp"
+        android:text="@string/start_now_quiz"
+        android:textColor="@color/dark_gray"
+        android:id="@+id/start_quiz_button"
+        android:focusable="false"
+        android:paddingTop="16dp"
+        android:textSize="24dp" />
+
+</LinearLayout>

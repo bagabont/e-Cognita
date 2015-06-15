@@ -10,7 +10,9 @@ public enum ApiPathEnum {
     USER_SIGN_UP("/api/users"),
     ENROLL_FOR_COURSE("/api/account/enrollments/"),
     LEAVE_COURSE("/api/account/enrollments/"),
-    SUBSCRIBE_FOR_NOTIFICATIONS("/api/account/subscriptions/");
+    SUBSCRIBE_FOR_NOTIFICATIONS("/api/account/subscriptions/"),
+    GET_LIST_OF_QUIZES("/api/quizzes/"),
+    GET_QUIZ_QUESTIONS("/api/quizzes/");
 
     private final String path;
 

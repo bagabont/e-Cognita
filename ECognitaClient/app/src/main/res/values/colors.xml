@@ -8,4 +8,6 @@
     <color name="list_background_pressed">#ff00c1c6</color>
     <color name="list_divider">#ffededed</color>
     <color name="list_item_title">#ff4f4f4f</color>
+    <color name="dark_gray">#ff737373</color>
+    <color name="light_gray">#ffb6b6b6</color>
 </resources>
