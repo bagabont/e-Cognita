@@ -25,6 +25,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment
 import rwth.elearning.ecognita.client.ecognitaclient.model.NavDrawerItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
 import rwth.elearning.ecognita.client.ecognitaclient.settings.SettingsFragment;
+import rwth.elearning.ecognita.client.ecognitaclient.statistics.StatisticsFragment;
 
 /**
  * Created by ekaterina on 22.05.2015.
@@ -147,7 +148,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
                 //TODO:
                 break;
             case STATISTICS_POSITION:
-                //TODO
+                fragment = new StatisticsFragment();
                 break;
             case SETTINGS_POSITION:
                 fragment = new SettingsFragment();
