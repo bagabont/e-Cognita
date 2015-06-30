@@ -9,13 +9,17 @@ public class QuizListItem implements IListItem {
     private String courseId;
     private String created;
     private String id;
+    private String resolved;
+    private String published;
 
-    public QuizListItem(String description, String title, String courseId, String created, String id) {
+    public QuizListItem(String description, String title, String courseId, String created, String id, String published, String resolved) {
         this.description = description;
         this.title = title;
         this.courseId = courseId;
         this.created = created;
         this.id = id;
+        this.published = published;
+        this.resolved = resolved;
     }
 
     public String getId() {
@@ -56,5 +60,21 @@ public class QuizListItem implements IListItem {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getResolved() {
+        return resolved;
+    }
+
+    public void setResolved(String resolved) {
+        this.resolved = resolved;
+    }
+
+    public String getPublished() {
+        return published;
+    }
+
+    public void setPublished(String published) {
+        this.published = published;
     }
 }

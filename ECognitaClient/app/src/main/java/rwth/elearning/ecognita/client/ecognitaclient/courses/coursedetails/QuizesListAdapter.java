@@ -46,6 +46,7 @@ public class QuizesListAdapter extends AbstractListAdapter<QuizListItem> {
             courseCreated.setText(item.getCreated());
 
             Button startquizButton = (Button) view.findViewById(R.id.start_quiz_button);
+          //  startquizButton.setVisibility(item.getResolved() != null && !item.getResolved().isEmpty() ? View.INVISIBLE : View.VISIBLE);
             startquizButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

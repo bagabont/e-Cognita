@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.model.QuizListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.UserAnswer;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.GetListOfQuestionsTask;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.SendAnswersTask;
 
 /**
  * Created by ekaterina on 15.06.2015.
@@ -29,6 +31,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.GetListOfQuestio
 public class QuizQuestionFragment extends Fragment {
     public static final int TEXT_SIZE = 24;
     public static final int PADDING = 8;
+    public static final int NUMBER_OF_OPTIONS_IN_THE_QUESTION = 2;
     private QuizListItem quizItem;
     private List<QuestionItem> listOfQuestions = new ArrayList<>();
     private int currentQuestionNumber = 0;
@@ -82,16 +85,19 @@ public class QuizQuestionFragment extends Fragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserAnswer answer = new UserAnswer(listOfQuestions.get(currentQuestionNumber).getId(),
-                        radioGroup.getCheckedRadioButtonId() - 1);
-                userAnswers.add(answer);
                 currentQuestionNumber++;
                 if (currentQuestionNumber < listOfQuestions.size()) {
+                    UserAnswer answer = new UserAnswer(listOfQuestions.get(currentQuestionNumber - 1).getId(),
+                            (radioGroup.getCheckedRadioButtonId() - 1) % NUMBER_OF_OPTIONS_IN_THE_QUESTION);
+                    userAnswers.add(answer);
                     setContentViewForQuestion();
                 }
+
                 if (currentQuestionNumber == listOfQuestions.size()) {
-                    //TODO: send all to server
-                    userAnswers.size();
+                    UserAnswer answer = new UserAnswer(listOfQuestions.get(currentQuestionNumber - 1).getId(),
+                            (radioGroup.getCheckedRadioButtonId() - 1) % NUMBER_OF_OPTIONS_IN_THE_QUESTION);
+                    userAnswers.add(answer);
+                    sendUserAnswers();
                 }
             }
         });
@@ -105,10 +111,32 @@ public class QuizQuestionFragment extends Fragment {
                     setContentViewForQuestion();
                 }
                 if (currentQuestionNumber == listOfQuestions.size()) {
-                    //TODO: send all to server
+                    sendUserAnswers();
                 }
             }
         });
+    }
+
+    private void sendUserAnswers() {
+        SendAnswersTask sendAnswersTask = new SendAnswersTask(this.quizItem.getId());
+        sendAnswersTask.setOnResponseListener(new OnResponseListener<Boolean>() {
+
+            @Override
+            public void onResponse(Boolean answersSuccessfullySent) {
+                if (answersSuccessfullySent) {
+                    Toast.makeText(getActivity(),
+                            "Thank you for taking the quiz! The results will be available after " + quizItem.getPublished(),
+                            Toast.LENGTH_LONG).show();
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e("answers_send", errorMessage);
+            }
+        });
+        sendAnswersTask.send(this.userAnswers);
     }
 
     private void setContentViewForQuestion() {
