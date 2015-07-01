@@ -1,6 +1,7 @@
 package rwth.elearning.ecognita.client.ecognitaclient.authorization;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +39,7 @@ public class LogInFragment extends Fragment {
 
     public static final String USER_TAG = "user";
     private Button loginButton;
+    ProgressDialog progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,11 @@ public class LogInFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ProgressDialog progress = new ProgressDialog(getActivity());
+                        progress.setTitle("Signing In...");
+                        progress.setMessage("Please Wait!");
+                        progress.setCancelable(false);
+                        progress.show();
                         attemptToLogin(fragmentView.findViewById(R.id.email_input), fragmentView.findViewById(R.id.password_input));
                     }
                 }
@@ -64,7 +71,6 @@ public class LogInFragment extends Fragment {
         if (emailInput instanceof EditText && passwordInput instanceof EditText) {
             String emailAddress = ((EditText) emailInput).getText().toString();
             String passwordValue = ((EditText) passwordInput).getText().toString();
-
             performLogin(emailAddress, passwordValue);
         }
     }
@@ -83,10 +89,12 @@ public class LogInFragment extends Fragment {
                     editor.putString(lastName, connectedUser.getLastName());
                     editor.putString(matrNumber, connectedUser.getMatrNumber());
                     editor.commit();
-
+                    // To dismiss the dialog
+                    //progress.dismiss();
                     Intent coursesActivityIntent = new Intent(getActivity(), MyCoursesActivity.class);
                     startActivity(coursesActivityIntent);
                 } else {
+                    progress.dismiss();
                     onError(getResources().getString(R.string.failed_to_login_message));
                 }
             }
