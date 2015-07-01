@@ -1,5 +1,8 @@
 package rwth.elearning.ecognita.client.ecognitaclient.courses;
 
+import android.annotation.TargetApi;
+import android.graphics.Outline;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
@@ -12,7 +15,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -52,9 +57,22 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         initActivity(savedInstanceState);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void initActivity(Bundle savedInstanceState) {
         setContentView(R.layout.activity_my_courses);
-        ImageButton addCourseButton = (ImageButton) findViewById(R.id.add_course_cutton);
+        Button addCourseButton = (Button) findViewById(R.id.add_course_cutton);
+
+        ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline mOutlineCircle) {
+                // Or read size directly from the view's width/height
+                int shapeSize = getResources().getDimensionPixelSize(R.dimen.shape_size);
+                mOutlineCircle.setRoundRect(0, 0, shapeSize, shapeSize, shapeSize / 2);
+            }
+        };
+        addCourseButton.setOutlineProvider(viewOutlineProvider);
+        addCourseButton.setClipToOutline(true);
+
         if (addCourseButton != null) {
             addCourseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
