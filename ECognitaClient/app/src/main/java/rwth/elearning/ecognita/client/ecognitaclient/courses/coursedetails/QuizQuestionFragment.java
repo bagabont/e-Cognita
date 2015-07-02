@@ -1,6 +1,7 @@
 package rwth.elearning.ecognita.client.ecognitaclient.courses.coursedetails;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class QuizQuestionFragment extends Fragment {
     private int currentQuestionNumber = 0;
     private List<UserAnswer> userAnswers = new ArrayList<>();
     private RadioGroup radioGroup;
+    private CountDownTimer timer;
 
     public static QuizQuestionFragment newInstance(QuizListItem quizListItem) {
         Bundle args = new Bundle();
@@ -64,6 +66,9 @@ public class QuizQuestionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final Button okButton = (Button) getView().findViewById(R.id.ok_question_button);
+        final Button skipButton = (Button) getView().findViewById(R.id.skip_question_button);
+
         GetListOfQuestionsTask getListOfQuestionsTask = new GetListOfQuestionsTask();
         getListOfQuestionsTask.setOnResponseListener(new OnResponseListener<List<QuestionItem>>() {
 
@@ -71,6 +76,16 @@ public class QuizQuestionFragment extends Fragment {
             public void onResponse(List<QuestionItem> receivedListOfQuestions) {
                 if (receivedListOfQuestions != null) {
                     listOfQuestions.addAll(receivedListOfQuestions);
+                    timer = new CountDownTimer(10000, 1000) {
+
+                        public void onTick(long millisUntilFinished) {
+                            skipButton.setText("SKIP (" + millisUntilFinished / 1000 + ")");
+                        }
+
+                        public void onFinish() {
+                            skipButton.performClick();
+                        }
+                    }.start();
                     setContentViewForQuestion();
                 }
             }
@@ -81,7 +96,7 @@ public class QuizQuestionFragment extends Fragment {
             }
         });
         getListOfQuestionsTask.send(this.quizItem);
-        Button okButton = (Button) getView().findViewById(R.id.ok_question_button);
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +106,7 @@ public class QuizQuestionFragment extends Fragment {
                             (radioGroup.getCheckedRadioButtonId() - 1) % NUMBER_OF_OPTIONS_IN_THE_QUESTION);
                     userAnswers.add(answer);
                     setContentViewForQuestion();
+                    timer.start();
                 }
 
                 if (currentQuestionNumber == listOfQuestions.size()) {
@@ -102,13 +118,13 @@ public class QuizQuestionFragment extends Fragment {
             }
         });
 
-        Button skipButton = (Button) getView().findViewById(R.id.skip_question_button);
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentQuestionNumber++;
                 if (currentQuestionNumber < listOfQuestions.size()) {
                     setContentViewForQuestion();
+                    timer.start();
                 }
                 if (currentQuestionNumber == listOfQuestions.size()) {
                     sendUserAnswers();
