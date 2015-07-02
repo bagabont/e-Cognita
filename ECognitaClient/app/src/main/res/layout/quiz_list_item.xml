@@ -40,16 +40,29 @@
         android:textSize="24sp" />
 
     <Button
+        android:id="@+id/start_quiz_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/quiz_available_text_color"
+        android:focusable="false"
         android:padding="8dp"
+        android:paddingTop="16dp"
         android:text="@string/start_now_quiz"
         android:textColor="@color/dark_gray"
-        android:id="@+id/start_quiz_button"
+        android:textSize="24dp" />
+
+    <Button
+        android:id="@+id/see_solution_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/quiz_available_text_color"
         android:focusable="false"
+        android:padding="8dp"
         android:paddingTop="16dp"
+        android:text="@string/see_solution_button_label"
+        android:textColor="@color/dark_gray"
         android:textSize="24dp" />
 
 </LinearLayout>

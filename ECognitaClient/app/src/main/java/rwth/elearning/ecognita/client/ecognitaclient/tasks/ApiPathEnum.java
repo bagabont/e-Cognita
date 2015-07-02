@@ -12,7 +12,8 @@ public enum ApiPathEnum {
     LEAVE_COURSE("/api/account/enrolled/"),
     SUBSCRIBE_FOR_NOTIFICATIONS("/api/account/subscriptions/"),
     GET_LIST_OF_QUIZES("/api/quizzes/"),
-    GET_QUIZ_QUESTIONS("/api/quizzes/");
+    GET_QUIZ_QUESTIONS("/api/quizzes/"),
+    SEE_SOLUTIONS("api/account/solutions/");
 
     private final String path;
 

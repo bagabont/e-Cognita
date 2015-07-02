@@ -56,6 +56,16 @@ public class QuizesListAdapter extends AbstractListAdapter<QuizListItem> {
                     context.startActivity(startQuiz);
                 }
             });
+            Button seeSolutionsButton = (Button) view.findViewById(R.id.see_solution_button);
+            seeSolutionsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent seeSolution = new Intent(context, SolutionActivity.class);
+                    seeSolution.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    seeSolution.putExtra(QUIZ_TAG, item);
+                    context.startActivity(seeSolution);
+                }
+            });
         }
         return view;
     }
