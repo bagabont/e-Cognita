@@ -49,7 +49,7 @@ public class SendAnswersTask {
 
             List<UserAnswer> userAnswers = params[0];
             try {
-                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.GET_LIST_OF_QUIZES.getPath() + quizId + "/answers");
+                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.GET_LIST_OF_QUIZES.getPath() + quizId + "/solutions");
                 JSONArray answersJson = new JSONArray();
                 for (UserAnswer userAnswer : userAnswers) {
                     JSONObject answer = new JSONObject();
