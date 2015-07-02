@@ -16,8 +16,8 @@ public class JSONCourseQuizesParser {
     private static final String ID_PROPERTY_NAME = "id";
     private static final String TITLE_PROPERTY_NAME = "title";
     private static final String DESCRIPTION_PROPERTY_NAME = "description";
-    private static final String CREATED_PROPERTY_NAME = "created";
-    private static final String COURSE_ID_PROPERTY_NAME = "course";
+    private static final String CREATED_PROPERTY_NAME = "date_created";
+    private static final String COURSE_ID_PROPERTY_NAME = "course_id";
     private static final String PUBLISHED_PROPERTY_NAME = "date_published";
     private static final String SOLVED_PROPERTY_NAME = "date_solved";
 
@@ -35,10 +35,10 @@ public class JSONCourseQuizesParser {
         String quizId = quizJsonObject.getString(ID_PROPERTY_NAME);
         String quizTitle = quizJsonObject.getString(TITLE_PROPERTY_NAME);
         String quizDescription = quizJsonObject.getString(DESCRIPTION_PROPERTY_NAME);
-        String quizCreated = quizJsonObject.getString(CREATED_PROPERTY_NAME);
+        String quizCreated = quizJsonObject.has(CREATED_PROPERTY_NAME) ? quizJsonObject.getString(CREATED_PROPERTY_NAME) : null;
         String quizCourseId = quizJsonObject.getString(COURSE_ID_PROPERTY_NAME);
         String quizResultsPublished = quizJsonObject.getString(PUBLISHED_PROPERTY_NAME);
-        String quizResolved = quizJsonObject.getString(SOLVED_PROPERTY_NAME);
+        String quizResolved = quizJsonObject.has(SOLVED_PROPERTY_NAME) ? quizJsonObject.getString(SOLVED_PROPERTY_NAME) : null;
         return new QuizListItem(quizDescription, quizTitle, quizCourseId, quizCreated, quizId,
                 quizResultsPublished, quizResolved);
     }

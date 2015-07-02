@@ -15,8 +15,8 @@ import rwth.elearning.ecognita.client.ecognitaclient.model.QuizListItem;
  */
 public class JSONQuizQuestionsParser {
     private static final String ID_PROPERTY_NAME = "id";
-    private static final String TEXT_PROPERTY_NAME = "text";
-    private static final String ANSWERS_PROPERTY_NAME = "answers";
+    private static final String TEXT_PROPERTY_NAME = "question";
+    private static final String ANSWERS_PROPERTY_NAME = "choices";
 
     public static List<QuestionItem> parse(String jsonString) throws JSONException {
         List<QuestionItem> items = new ArrayList<>();

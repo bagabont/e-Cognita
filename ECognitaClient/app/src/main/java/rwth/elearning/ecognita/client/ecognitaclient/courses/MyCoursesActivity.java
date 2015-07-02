@@ -179,7 +179,8 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         if (fragment != null) {
             FragmentManager fragmentManager = activity.getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(containerViewId, fragment).commit();
-
+            Button addCourseButton = (Button) findViewById(R.id.add_course_cutton);
+            addCourseButton.setVisibility(fragment instanceof MyCoursesHomeFragment ? View.VISIBLE : View.INVISIBLE);
             drawerListView.setItemChecked(position, true);
             drawerListView.setSelection(position);
             drawerLayout.closeDrawer(slideMenu);

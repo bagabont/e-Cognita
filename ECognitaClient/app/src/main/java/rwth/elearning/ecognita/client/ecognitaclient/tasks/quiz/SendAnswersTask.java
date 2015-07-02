@@ -53,8 +53,8 @@ public class SendAnswersTask {
                 JSONArray answersJson = new JSONArray();
                 for (UserAnswer userAnswer : userAnswers) {
                     JSONObject answer = new JSONObject();
-                    answer.put("question", userAnswer.getQuestionId());
-                    answer.put("choice", userAnswer.getChoice());
+                    answer.put("question_id", userAnswer.getQuestionId());
+                    answer.put("selected", userAnswer.getChoice());
                     answersJson.put(answer);
                 }
 
