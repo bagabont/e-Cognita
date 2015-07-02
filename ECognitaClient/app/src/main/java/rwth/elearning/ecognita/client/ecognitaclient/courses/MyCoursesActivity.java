@@ -189,7 +189,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
+        if (actionBarDrawerToggle != null) actionBarDrawerToggle.syncState();
     }
 
     @Override

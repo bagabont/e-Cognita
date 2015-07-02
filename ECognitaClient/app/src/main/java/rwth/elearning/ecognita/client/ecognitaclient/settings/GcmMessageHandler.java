@@ -22,7 +22,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.model.User;
  * Created by ekaterina on 14.06.2015.
  */
 public class GcmMessageHandler extends IntentService {
-    public static final String TEXT_PROPERTY_NAME = "text";
+    public static final String TEXT_PROPERTY_NAME = "message";
     public static final String QUIZ_ID_PROPERTY_NAME = "quiz_id";
     private String issuedMessage;
     private String quizId;
