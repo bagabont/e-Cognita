@@ -32,7 +32,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.SendAnswersTask;
 public class QuizQuestionFragment extends Fragment {
     public static final int TEXT_SIZE = 24;
     public static final int PADDING = 8;
-    public static final int NUMBER_OF_OPTIONS_IN_THE_QUESTION = 2;
+    public static final int NUMBER_OF_OPTIONS_IN_THE_QUESTION = 4;
     private QuizListItem quizItem;
     private List<QuestionItem> listOfQuestions = new ArrayList<>();
     private int currentQuestionNumber = 0;

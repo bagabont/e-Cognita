@@ -36,6 +36,6 @@ public class JSONQuizQuestionsParser {
         for (int i = 0; i < answers.length(); i++) {
             questionAnswers.add(answers.getString(i));
         }
-        return new QuestionItem(questionId, questionText, questionAnswers, 0);
+        return new QuestionItem(questionId, questionText, questionAnswers);
     }
 }

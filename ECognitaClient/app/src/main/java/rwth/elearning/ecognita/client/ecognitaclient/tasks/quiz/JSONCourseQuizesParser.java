@@ -20,6 +20,7 @@ public class JSONCourseQuizesParser {
     private static final String COURSE_ID_PROPERTY_NAME = "course_id";
     private static final String PUBLISHED_PROPERTY_NAME = "date_published";
     private static final String SOLVED_PROPERTY_NAME = "date_solved";
+    private static final String CLOSED_PROPERTY_NAME = "date_closed";
 
     public static List<QuizListItem> parse(String jsonString) throws JSONException {
         List<QuizListItem> items = new ArrayList<>();
