@@ -24,6 +24,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.ActivityWithLogoutMenu;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
@@ -207,10 +209,16 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         }
         if (item.getItemId() == MENU_REFRESH) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            for (Fragment fragment : fragmentManager.getFragments()) {
-                fragmentManager.beginTransaction().remove(fragment).commit();
+            List<Fragment> currentFragments = fragmentManager.getFragments();
+            if (currentFragments != null) {
+                for (Fragment fragment : fragmentManager.getFragments()) {
+                    fragmentManager.beginTransaction().remove(fragment).commit();
+                }
+                initActivity(getIntent().getExtras());
+            } else {
+                initActivity(getIntent().getExtras());
+               // displayView(HOME_POSITION, this, R.id.frame_container);
             }
-            recreate();
             return true;
         }
         return super.onOptionsItemSelected(item);
