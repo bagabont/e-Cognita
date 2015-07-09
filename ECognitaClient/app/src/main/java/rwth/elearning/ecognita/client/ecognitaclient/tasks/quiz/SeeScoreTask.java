@@ -3,6 +3,7 @@ package rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +11,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
-import rwth.elearning.ecognita.client.ecognitaclient.model.QuestionItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.QuizListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.ApiPathEnum;
@@ -21,9 +20,10 @@ import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
 import rwth.elearning.ecognita.client.ecognitaclient.tasks.ResponseEnum;
 
 /**
- * Created by ekaterina on 02.07.2015.
+ * Created by ekaterina on 09.07.2015.
  */
-public class SeeSolutionsTask {
+public class SeeScoreTask {
+    private static final String SCORE_PROPERTY_NAME = "score";
     private OnResponseListener onResponseListener;
 
     public void send(QuizListItem quizListItem) {
@@ -34,16 +34,16 @@ public class SeeSolutionsTask {
         this.onResponseListener = onResponseListener;
     }
 
-    private class HttpGetListOfQuestionsTask extends AsyncTask<QuizListItem, Void, List<QuestionItem>> {
+    private class HttpGetListOfQuestionsTask extends AsyncTask<QuizListItem, Void, String> {
 
         @Override
-        protected List<QuestionItem> doInBackground(QuizListItem... args) {
+        protected String doInBackground(QuizListItem... args) {
             HttpURLConnection conn = null;
             User user = LogInFragment.getConnectedUser();
             if (user == null) return null;
             try {
                 QuizListItem quizListItem = args[0];
-                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.SEE_SOLUTIONS.getPath() + quizListItem.getId());
+                URL url = new URL(LogInFragment.HOST_ADDRESS + ApiPathEnum.SEE_SCORE.getPath() + quizListItem.getId());
 
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
@@ -62,7 +62,8 @@ public class SeeSolutionsTask {
                             sb.append(line + "\n");
                         }
                         br.close();
-                        return JSONQuizSolutionsParser.parse(sb.toString());
+                        JSONObject scoreObject = new JSONObject(sb.toString());
+                        return scoreObject.getString(SCORE_PROPERTY_NAME);
                 }
             } catch (MalformedURLException e) {
                 onResponseListener.onError(e.getMessage());
@@ -80,9 +81,9 @@ public class SeeSolutionsTask {
         }
 
         @Override
-        protected void onPostExecute(List<QuestionItem> quizes) {
-            super.onPostExecute(quizes);
-            onResponseListener.onResponse(quizes);
+        protected void onPostExecute(String score) {
+            super.onPostExecute(score);
+            onResponseListener.onResponse(score);
         }
     }
 }

@@ -4,6 +4,7 @@ package rwth.elearning.ecognita.client.ecognitaclient.model;
  * Created by ekaterina on 15.06.2015.
  */
 public class QuizListItem implements IListItem {
+    private String closed;
     private String description;
     private String title;
     private String courseId;
@@ -20,6 +21,15 @@ public class QuizListItem implements IListItem {
         this.id = id;
         this.published = published;
         this.resolved = resolved;
+    }
+
+    public QuizListItem(String description, String title, String courseId, String created, String id, String published, String resolved, String quizClosed) {
+        this(description, title, courseId, created, id, published, resolved);
+        this.closed = quizClosed;
+    }
+
+    public String getClosed() {
+        return this.closed;
     }
 
     public String getId() {

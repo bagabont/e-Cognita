@@ -27,6 +27,7 @@
     <string name="ok_question">OK</string>
     <string name="skip_question">SKIP</string>
     <string name="see_solution_button_label">See Solution</string>
+    <string name="refresh_menu_label">Refresh</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">

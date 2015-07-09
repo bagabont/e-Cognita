@@ -37,6 +37,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.statistics.StatisticsFragme
  */
 @SuppressWarnings("deprecation")
 public class MyCoursesActivity extends ActivityWithLogoutMenu {
+    private static final int MENU_REFRESH = Menu.FIRST + 1;
     protected DrawerLayout drawerLayout;
     protected ListView drawerListView;
     protected LinearLayout slideMenu;
@@ -204,6 +205,14 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+        if (item.getItemId() == MENU_REFRESH) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            for (Fragment fragment : fragmentManager.getFragments()) {
+                fragmentManager.beginTransaction().remove(fragment).commit();
+            }
+            recreate();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -212,5 +221,12 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         boolean drawerOpen = drawerLayout.isDrawerOpen(slideMenu);
         menu.findItem(ActivityWithLogoutMenu.MENU_LOGOUT).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        menu.add(Menu.NONE, MENU_REFRESH, Menu.NONE, R.string.refresh_menu_label);
+        return true;
     }
 }

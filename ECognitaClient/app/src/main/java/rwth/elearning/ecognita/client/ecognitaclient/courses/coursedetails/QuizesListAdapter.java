@@ -46,7 +46,8 @@ public class QuizesListAdapter extends AbstractListAdapter<QuizListItem> {
             courseCreated.setText(item.getCreated());
 
             Button startquizButton = (Button) view.findViewById(R.id.start_quiz_button);
-            startquizButton.setVisibility(item.getResolved() != null && !item.getResolved().isEmpty() ? View.INVISIBLE : View.VISIBLE);
+            startquizButton.setVisibility(!"null".equals(item.getResolved()) && item.getResolved() != null
+                    && !item.getResolved().isEmpty() ? View.INVISIBLE : View.VISIBLE);
             startquizButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,6 +58,8 @@ public class QuizesListAdapter extends AbstractListAdapter<QuizListItem> {
                 }
             });
             Button seeSolutionsButton = (Button) view.findViewById(R.id.see_solution_button);
+            seeSolutionsButton.setVisibility(!"null".equals(item.getClosed()) && item.getClosed() != null
+                    && !item.getClosed().isEmpty() ? View.INVISIBLE : View.VISIBLE);
             seeSolutionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

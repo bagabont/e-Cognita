@@ -2,12 +2,20 @@ package rwth.elearning.ecognita.client.ecognitaclient.courses.coursedetails;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.widget.TextView;
+
+import java.util.List;
 
 import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.ActivityWithLogoutMenu;
 import rwth.elearning.ecognita.client.ecognitaclient.courses.MyCoursesHomeFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
+import rwth.elearning.ecognita.client.ecognitaclient.model.QuestionItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.QuizListItem;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.SeeScoreTask;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.SeeSolutionsTask;
 
 /**
  * Created by ekaterina on 02.07.2015.
@@ -24,7 +32,7 @@ public class SolutionActivity extends ActivityWithLogoutMenu {
         Bundle extras = getIntent().getExtras();
         QuizListItem quiz = (QuizListItem) extras.getSerializable(QuizesListAdapter.QUIZ_TAG);
         if (quiz != null) {
-            setTitle(quiz.getTitle());
+            setTitle("Solutions - " + quiz.getTitle());
             this.quiz = quiz;
         }
 
@@ -36,5 +44,23 @@ public class SolutionActivity extends ActivityWithLogoutMenu {
             solutionFragment = SolutionFragment.newInstance(quiz);
             fragmentManager.beginTransaction().add(R.id.see_solution_fragment_container, solutionFragment, FRAGMENT_TAG).commit();
         }
+
+        final TextView scoreView = (TextView) findViewById(R.id.score_text);
+        SeeScoreTask seeScoreTask = new SeeScoreTask();
+        seeScoreTask.setOnResponseListener(new OnResponseListener<String>() {
+
+            @Override
+            public void onResponse(String score) {
+                if (score != null) {
+                    scoreView.setText("Score: " + score);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e("score", errorMessage);
+            }
+        });
+        seeScoreTask.send(this.quiz);
     }
 }

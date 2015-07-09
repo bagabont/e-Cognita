@@ -40,7 +40,8 @@ public class JSONCourseQuizesParser {
         String quizCourseId = quizJsonObject.getString(COURSE_ID_PROPERTY_NAME);
         String quizResultsPublished = quizJsonObject.getString(PUBLISHED_PROPERTY_NAME);
         String quizResolved = quizJsonObject.has(SOLVED_PROPERTY_NAME) ? quizJsonObject.getString(SOLVED_PROPERTY_NAME) : null;
+        String quizClosed = quizJsonObject.has(CLOSED_PROPERTY_NAME) ? quizJsonObject.getString(CLOSED_PROPERTY_NAME) : null;
         return new QuizListItem(quizDescription, quizTitle, quizCourseId, quizCreated, quizId,
-                quizResultsPublished, quizResolved);
+                quizResultsPublished, quizResolved, quizClosed);
     }
 }
