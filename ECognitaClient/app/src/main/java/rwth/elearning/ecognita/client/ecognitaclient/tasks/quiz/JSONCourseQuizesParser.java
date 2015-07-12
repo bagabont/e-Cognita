@@ -32,13 +32,17 @@ public class JSONCourseQuizesParser {
         return items;
     }
 
+    public static QuizListItem parseItem(String jsonAsSting) throws JSONException {
+        return parseItem(new JSONObject(jsonAsSting));
+    }
+
     private static QuizListItem parseItem(JSONObject quizJsonObject) throws JSONException {
         String quizId = quizJsonObject.getString(ID_PROPERTY_NAME);
         String quizTitle = quizJsonObject.getString(TITLE_PROPERTY_NAME);
         String quizDescription = quizJsonObject.getString(DESCRIPTION_PROPERTY_NAME);
         String quizCreated = quizJsonObject.has(CREATED_PROPERTY_NAME) ? quizJsonObject.getString(CREATED_PROPERTY_NAME) : null;
         String quizCourseId = quizJsonObject.getString(COURSE_ID_PROPERTY_NAME);
-        String quizResultsPublished = quizJsonObject.getString(PUBLISHED_PROPERTY_NAME);
+        String quizResultsPublished = quizJsonObject.has(PUBLISHED_PROPERTY_NAME) ? quizJsonObject.getString(PUBLISHED_PROPERTY_NAME) : null;
         String quizResolved = quizJsonObject.has(SOLVED_PROPERTY_NAME) ? quizJsonObject.getString(SOLVED_PROPERTY_NAME) : null;
         String quizClosed = quizJsonObject.has(CLOSED_PROPERTY_NAME) ? quizJsonObject.getString(CLOSED_PROPERTY_NAME) : null;
         return new QuizListItem(quizDescription, quizTitle, quizCourseId, quizCreated, quizId,

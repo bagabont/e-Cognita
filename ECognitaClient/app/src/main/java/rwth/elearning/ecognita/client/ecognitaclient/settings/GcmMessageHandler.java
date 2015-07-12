@@ -15,8 +15,12 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import rwth.elearning.ecognita.client.ecognitaclient.R;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.SignInActivity;
-import rwth.elearning.ecognita.client.ecognitaclient.courses.MyCoursesActivity;
+import rwth.elearning.ecognita.client.ecognitaclient.courses.coursedetails.QuizActivity;
+import rwth.elearning.ecognita.client.ecognitaclient.courses.coursedetails.QuizesListAdapter;
+import rwth.elearning.ecognita.client.ecognitaclient.model.QuizListItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.OnResponseListener;
+import rwth.elearning.ecognita.client.ecognitaclient.tasks.quiz.GetQuizByIdTask;
 
 /**
  * Created by ekaterina on 14.06.2015.
@@ -47,15 +51,32 @@ public class GcmMessageHandler extends IntentService {
 
         issuedMessage = extras.getString(TEXT_PROPERTY_NAME);
         quizId = extras.getString(QUIZ_ID_PROPERTY_NAME);
-        createNotification();
+
+        GetQuizByIdTask getQuizByIdTask = new GetQuizByIdTask();
+        getQuizByIdTask.setOnResponseListener(new OnResponseListener<QuizListItem>() {
+
+            @Override
+            public void onResponse(QuizListItem quiz) {
+                if (quiz != null) {
+                    createNotification(quiz);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e("GCM", errorMessage);
+            }
+        });
+        getQuizByIdTask.send(quizId);
         Log.i("GCM", "Received : (" + messageType + ")  ");
 
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    public void createNotification() {
+    public void createNotification(QuizListItem quiz) {
         User connectedUser = LogInFragment.getConnectedUser();
-        Intent intent = new Intent(this, connectedUser == null ? SignInActivity.class : MyCoursesActivity.class);
+        Intent intent = new Intent(this, connectedUser == null ? SignInActivity.class : QuizActivity.class);
+        intent.putExtra(QuizesListAdapter.QUIZ_TAG, quiz);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         Notification notification =

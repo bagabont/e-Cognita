@@ -14,7 +14,8 @@ public enum ApiPathEnum {
     GET_LIST_OF_QUIZES("/api/quizzes/"),
     GET_QUIZ_QUESTIONS("/api/quizzes/"),
     SEE_SOLUTIONS("/api/account/solutions/"),
-    SEE_SCORE("/api/account/scores/");
+    SEE_SCORE("/api/account/scores/"),
+    GET_QUIZ_BY_ID("/api/quizzes/");
 
     private final String path;
 

@@ -73,7 +73,7 @@ public class SolutionsListAdapter extends AbstractListAdapter<QuestionItem> {
             if (correctAnswerIndex != selectedAnswerIndex) {
                 if (selectedAnswerIndex != -1) {
                     options.get(selectedAnswerIndex).setBackgroundColor(wrongColor);
-                    optionImages.get(selectedAnswerIndex).setBackgroundColor(rightColor);
+                    optionImages.get(selectedAnswerIndex).setBackgroundColor(wrongColor);
                     optionImages.get(selectedAnswerIndex).setImageResource(R.drawable.wrontick);
                 } else {
                     //show all red
