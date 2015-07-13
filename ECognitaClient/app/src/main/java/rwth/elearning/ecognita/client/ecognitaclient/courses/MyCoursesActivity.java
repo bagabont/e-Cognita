@@ -1,16 +1,16 @@
 package rwth.elearning.ecognita.client.ecognitaclient.courses;
 
 import android.annotation.TargetApi;
-import android.graphics.Outline;
-import android.os.Build;
-import android.support.annotation.IdRes;
-import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Outline;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -31,6 +30,7 @@ import rwth.elearning.ecognita.client.ecognitaclient.authorization.ActivityWithL
 import rwth.elearning.ecognita.client.ecognitaclient.authorization.LogInFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.model.NavDrawerItem;
 import rwth.elearning.ecognita.client.ecognitaclient.model.User;
+import rwth.elearning.ecognita.client.ecognitaclient.search.SearchFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.settings.SettingsFragment;
 import rwth.elearning.ecognita.client.ecognitaclient.statistics.StatisticsFragment;
 
@@ -166,7 +166,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
                 fragment = MyCoursesHomeFragment.newInstance(this.loggedInUser);
                 break;
             case SEARCH_POSITION:
-                //TODO:
+                fragment = new SearchFragment();
                 break;
             case STATISTICS_POSITION:
                 fragment = new StatisticsFragment();
