@@ -48,26 +48,37 @@ public class SolutionsListAdapter extends AbstractListAdapter<QuestionItem> {
             List<TextView> options = new ArrayList<>();
             List<ImageView> optionImages = new ArrayList<>();
             TextView option1 = (TextView) view.findViewById(R.id.option1);
+            option1.setBackgroundColor(Color.WHITE);
             option1.setText(item.getAnswers().size() > 0 ? item.getAnswers().get(0) : "");
             options.add(option1);
             TextView option2 = (TextView) view.findViewById(R.id.option2);
             option2.setText(item.getAnswers().size() > 1 ? item.getAnswers().get(1) : "");
+            option2.setBackgroundColor(Color.WHITE);
             options.add(option2);
             TextView option3 = (TextView) view.findViewById(R.id.option3);
             option3.setText(item.getAnswers().size() > 2 ? item.getAnswers().get(2) : "");
+            option3.setBackgroundColor(Color.WHITE);
             options.add(option3);
             TextView option4 = (TextView) view.findViewById(R.id.option4);
             option4.setText(item.getAnswers().size() > 3 ? item.getAnswers().get(3) : "");
+            option4.setBackgroundColor(Color.WHITE);
             options.add(option4);
 
             ImageView optionImage1 = (ImageView) view.findViewById(R.id.option1_image);
             ImageView optionImage2 = (ImageView) view.findViewById(R.id.option2_image);
             ImageView optionImage3 = (ImageView) view.findViewById(R.id.option3_image);
             ImageView optionImage4 = (ImageView) view.findViewById(R.id.option4_image);
+            optionImage1.setBackgroundColor(Color.WHITE);
+            optionImage2.setBackgroundColor(Color.WHITE);
+            optionImage3.setBackgroundColor(Color.WHITE);
+            optionImage4.setBackgroundColor(Color.WHITE);
             optionImages.add(optionImage1);
             optionImages.add(optionImage2);
             optionImages.add(optionImage3);
             optionImages.add(optionImage4);
+            for (ImageView opImage : optionImages) {
+                opImage.setImageResource(0);
+            }
             int rightColor = view.getResources().getColor(R.color.correct_answer);
             int wrongColor = view.getResources().getColor(R.color.wrong_answer);
             if (correctAnswerIndex != selectedAnswerIndex) {
