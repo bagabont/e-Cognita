@@ -2,6 +2,7 @@ package rwth.elearning.ecognita.client.ecognitaclient.statistics;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 
 import org.json.JSONArray;
@@ -145,27 +147,26 @@ public class StatisticsFragment extends Fragment {
 
             for (int i = 0; i < result.size() / 5; i++) {
                 if (result.get(i) != null) {
-                    dataScores[i] = new GraphView.GraphViewData(i+1, Double.parseDouble(result.get(i + 2))*100);
-                    dataAvg[i] = new GraphView.GraphViewData(i+1, Double.parseDouble(result.get(i + 3))*100);
+                    dataScores[i] = new GraphView.GraphViewData(i+1, Double.parseDouble(result.get(i*5 + 2))*100);
+                    dataAvg[i] = new GraphView.GraphViewData(i+1, Double.parseDouble(result.get(i*5 + 3))*100);
                 } else {
                     dataScores[i] = new GraphView.GraphViewData(i+1, 0);
                     dataAvg[i] = new GraphView.GraphViewData(i+1, 0);
                 }
             }
 
-            GraphViewSeries seriesScores = new GraphViewSeries("Your Score", new GraphViewSeries.GraphViewSeriesStyle(getResources().getColor(R.color.material_blue_grey_800), 5),dataScores);
-            GraphViewSeries seriesAvg = new GraphViewSeries("Avg Scores", new GraphViewSeries.GraphViewSeriesStyle(getResources().getColor(R.color.light_gray), 5),dataAvg);
             //graphView.setManualYAxisBounds(0, 10);
             graphView.addSeries(seriesScores);
             graphView.addSeries(seriesAvg);
-            TextView text1 = (TextView) rootView.findViewById(R.id.textView);
-            TextView text2 = (TextView) rootView.findViewById(R.id.textView2);
+            //graphView.setVerticalLabels(new String[] {"bad", "average", "good"});
+            //TextView text1 = (TextView) rootView.findViewById(R.id.textView);
+            //TextView text2 = (TextView) rootView.findViewById(R.id.textView2);
             TextView text3 = (TextView) rootView.findViewById(R.id.textView3);
-            text1.setText("Your Score with blue");
-            text2.setText("Average score with gray");
             text3.setText("Total Solutions: "+result.get(4));
             //graphView.setViewPort(1, 10);
             //graphView.setManualYAxisBounds(100, 0);
+            graphView.setManualYAxisBounds(100, 0);
+            graphView.setScalable(true);
             graphView.setScrollable(true);
             layout.addView(graphView);
 
