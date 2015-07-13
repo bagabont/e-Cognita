@@ -138,7 +138,7 @@ public class StatisticsFragment extends Fragment {
             for (int i = 0; i < result.size() / 5; i++) {
                 graphView = new LineGraphView(
                         rootView.getContext() // context
-                        , "Web Technologies" // heading
+                        , "% of correct answers" // heading
                 );
             }
 
