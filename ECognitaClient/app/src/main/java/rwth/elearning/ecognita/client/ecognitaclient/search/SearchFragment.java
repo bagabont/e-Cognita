@@ -9,11 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import rwth.elearning.ecognita.client.ecognitaclient.R;
+import rwth.elearning.ecognita.client.ecognitaclient.courses.AllCoursesFragment;
 
 /**
  * Created by Albi on 7/13/2015.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends AllCoursesFragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {

@@ -39,6 +39,7 @@ public class QuizQuestionFragment extends Fragment {
     private List<UserAnswer> userAnswers = new ArrayList<>();
     private RadioGroup radioGroup;
     private CountDownTimer timer;
+    private boolean flag = false;
 
     public static QuizQuestionFragment newInstance(QuizListItem quizListItem) {
         Bundle args = new Bundle();
@@ -83,7 +84,9 @@ public class QuizQuestionFragment extends Fragment {
                         }
 
                         public void onFinish() {
-                            skipButton.performClick();
+                            if (!flag) {
+                                skipButton.performClick();
+                            }
                         }
                     }.start();
                     setContentViewForQuestion();
@@ -100,6 +103,7 @@ public class QuizQuestionFragment extends Fragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                flag = true;
                 currentQuestionNumber++;
                 if (currentQuestionNumber < listOfQuestions.size()) {
                     UserAnswer answer = new UserAnswer(listOfQuestions.get(currentQuestionNumber - 1).getId(),
@@ -156,6 +160,7 @@ public class QuizQuestionFragment extends Fragment {
     }
 
     private void setContentViewForQuestion() {
+        flag = false;
         LinearLayout questionArea = (LinearLayout) getView().findViewById(R.id.area_for_options);
         questionArea.removeAllViews();
         QuestionItem question1 = listOfQuestions.get(currentQuestionNumber);

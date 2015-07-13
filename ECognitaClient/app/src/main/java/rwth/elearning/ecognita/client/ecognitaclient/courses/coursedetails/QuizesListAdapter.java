@@ -59,7 +59,7 @@ public class QuizesListAdapter extends AbstractListAdapter<QuizListItem> {
             });
             Button seeSolutionsButton = (Button) view.findViewById(R.id.see_solution_button);
             seeSolutionsButton.setVisibility(!"null".equals(item.getClosed()) && item.getClosed() != null
-                    && !item.getClosed().isEmpty() ? View.INVISIBLE : View.VISIBLE);
+                    && !item.getClosed().isEmpty() ? View.VISIBLE : View.INVISIBLE);
             seeSolutionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

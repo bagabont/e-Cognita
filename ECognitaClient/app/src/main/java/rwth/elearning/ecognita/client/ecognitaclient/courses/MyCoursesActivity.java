@@ -53,6 +53,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
     private static final int SEARCH_POSITION = 1;
     private static final int STATISTICS_POSITION = 2;
     private static final int SETTINGS_POSITION = 3;
+    private boolean isHomeDisplyed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,15 +165,19 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
         switch (position) {
             case HOME_POSITION:
                 fragment = MyCoursesHomeFragment.newInstance(this.loggedInUser);
+                isHomeDisplyed = true;
                 break;
             case SEARCH_POSITION:
                 fragment = new SearchFragment();
+                isHomeDisplyed = false;
                 break;
             case STATISTICS_POSITION:
                 fragment = new StatisticsFragment();
+                isHomeDisplyed = false;
                 break;
             case SETTINGS_POSITION:
                 fragment = new SettingsFragment();
+                isHomeDisplyed = false;
                 break;
 
             default:
@@ -183,7 +188,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
             FragmentManager fragmentManager = activity.getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(containerViewId, fragment).commit();
             Button addCourseButton = (Button) findViewById(R.id.add_course_cutton);
-            addCourseButton.setVisibility(fragment instanceof MyCoursesHomeFragment ? View.VISIBLE : View.INVISIBLE);
+            addCourseButton.setVisibility(isHomeDisplyed ? View.VISIBLE : View.INVISIBLE);
             drawerListView.setItemChecked(position, true);
             drawerListView.setSelection(position);
             drawerLayout.closeDrawer(slideMenu);
@@ -217,7 +222,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
                 initActivity(getIntent().getExtras());
             } else {
                 initActivity(getIntent().getExtras());
-               // displayView(HOME_POSITION, this, R.id.frame_container);
+                // displayView(HOME_POSITION, this, R.id.frame_container);
             }
             return true;
         }
@@ -228,6 +233,7 @@ public class MyCoursesActivity extends ActivityWithLogoutMenu {
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean drawerOpen = drawerLayout.isDrawerOpen(slideMenu);
         menu.findItem(ActivityWithLogoutMenu.MENU_LOGOUT).setVisible(!drawerOpen);
+        menu.findItem(MENU_REFRESH).setVisible(isHomeDisplyed);
         return super.onPrepareOptionsMenu(menu);
     }
 
