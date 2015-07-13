@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import rwth.elearning.ecognita.client.ecognitaclient.model.CourseListItem;
+
 /**
  * Created by ekaterina on 25.05.2015.
  */
@@ -26,6 +28,10 @@ public abstract class AbstractListAdapter<T extends Serializable> extends BaseAd
     public void add(T item) {
         items.add(item);
         notifyDataSetChanged();
+    }
+
+    public List<T> getItems() {
+        return this.items;
     }
 
     /**
@@ -49,5 +55,12 @@ public abstract class AbstractListAdapter<T extends Serializable> extends BaseAd
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void setItems(List<T> items) {
+        clear();
+        for (T item : items) {
+            add(item);
+        }
     }
 }
