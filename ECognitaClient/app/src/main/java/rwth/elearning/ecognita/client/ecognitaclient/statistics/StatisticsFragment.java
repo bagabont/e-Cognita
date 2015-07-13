@@ -155,6 +155,8 @@ public class StatisticsFragment extends Fragment {
                 }
             }
 
+            GraphViewSeries seriesScores = new GraphViewSeries("YOU", new GraphViewSeries.GraphViewSeriesStyle(getResources().getColor(R.color.material_blue_grey_800), 5),dataScores);
+            GraphViewSeries seriesAvg = new GraphViewSeries("AVG", new GraphViewSeries.GraphViewSeriesStyle(getResources().getColor(R.color.light_gray), 5),dataAvg);
             //graphView.setManualYAxisBounds(0, 10);
             graphView.addSeries(seriesScores);
             graphView.addSeries(seriesAvg);
@@ -162,9 +164,18 @@ public class StatisticsFragment extends Fragment {
             //TextView text1 = (TextView) rootView.findViewById(R.id.textView);
             //TextView text2 = (TextView) rootView.findViewById(R.id.textView2);
             TextView text3 = (TextView) rootView.findViewById(R.id.textView3);
-            text3.setText("Total Solutions: "+result.get(4));
+            //text1.setText("Your Score with blue");
+            //text2.setText("Average score with gray");
+            text3.setText("Total Solutions: " + result.get(4));
+            graphView.setShowLegend(true);
+            graphView.setLegendAlign(GraphView.LegendAlign.TOP);
+            String[] horizLabels = new String[result.size() / 5];
+            for (int i = 0; i < result.size() / 5; i++) {
+                horizLabels[i] = "Quiz " + (i+1);
+            }
+            graphView.setHorizontalLabels(horizLabels);
+            graphView.setGraphViewStyle(new GraphViewStyle(Color.DKGRAY, Color.DKGRAY, Color.LTGRAY));
             //graphView.setViewPort(1, 10);
-            //graphView.setManualYAxisBounds(100, 0);
             graphView.setManualYAxisBounds(100, 0);
             graphView.setScalable(true);
             graphView.setScrollable(true);
